@@ -1161,7 +1161,7 @@ var PokeTranslator = {
     "Zacian": "888_000",
     "Zacian-Crowned": "888_000",
     "Zamazenta": "889_000",
-    "Zamazenta-Crowned": "889_000",
+    "Zamazenta-Crowned": "889_001",
     "Eternatus": "890_000",
     "Eternatus-Eternamax": "890_000",
     "Kubfu": "891_000",
