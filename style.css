@@ -164,7 +164,9 @@
   #ger:checked ~ label .option .chroma.ger,
   #jpn:checked ~ label .option .chroma.jpn,
   #kor:checked ~ label .option .chroma.kor,
-  #ita:checked ~ label .option .chroma.ita{
+  #ita:checked ~ label .option .chroma.ita,
+  #sv:checked ~ label .option .chroma.sv,
+  #champions:checked ~ label .option .chroma.champions{
       background-color: rgba(5, 6, 45, 0);
   }
   
@@ -183,7 +185,9 @@
   #ger:checked ~ label .option .chroma.ger span,
   #jpn:checked ~ label .option .chroma.jpn span,
   #kor:checked ~ label .option .chroma.kor span,
-  #ita:checked ~ label .option .chroma.ita span{
+  #ita:checked ~ label .option .chroma.ita span,
+  #sv:checked ~ label .option .chroma.sv span,
+  #champions:checked ~ label .option .chroma.champions span{
       color: white;
   }
   
@@ -202,7 +206,9 @@
   #ger:checked ~ label[for="ger"],
   #jpn:checked ~ label[for="jpn"],
   #kor:checked ~ label[for="kor"],
-  #ita:checked ~ label[for="ita"]{
+  #ita:checked ~ label[for="ita"],
+  #sv:checked ~ label[for="sv"],
+  #champions:checked ~ label[for="champions"]{
       opacity: 1;
   }
   

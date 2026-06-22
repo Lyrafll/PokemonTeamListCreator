@@ -110,6 +110,7 @@ function generatePdf(element) {
     var paste = document.getElementById('paste').value;
     var ageDivision = document.querySelector('input[name="ageDivision"]:checked');
     var chosenLang = document.querySelectorAll('input[name="radioLang"]:checked');
+    var isChampions = document.querySelector('input[name="game"]:checked')?.value === 'champions';
 
     for (var sheet of sheets) {
         if (sheet.checked){
@@ -276,7 +277,7 @@ function generatePdf(element) {
 
             var nameId = PokeTranslator[pokes[i].name];
             var abilityId = AbilityTranslator[pokes[i].ability];
-            var teraTypeId = TypeTranslator[pokes[i].teraType];
+            var teraTypeId = isChampions ? null : TypeTranslator[pokes[i].teraType];
 
             var itemId = 'NOITEM';
             if (pokes[i].item){
@@ -313,10 +314,12 @@ function generatePdf(element) {
             }
 
             var name = window['pokes' + chosenLang][nameId];
-            var teraType = window['types' + chosenLang][teraTypeId];
-            if (teraType == undefined)
-            {
-                teraType = "None";
+            var teraType;
+            if (isChampions) {
+                teraType = nature;
+            } else {
+                teraType = window['types' + chosenLang][teraTypeId];
+                if (teraType == undefined) teraType = "None";
             }
             var ability = window['abilities' + chosenLang][abilityId];
             var item = 'NO ITEM';
@@ -338,7 +341,7 @@ function generatePdf(element) {
 
             doc.setFontSize(13);
             doc.setFont("text1", 'normal');
-            doc.text("Tera Type", textXX + (i%2) * gapX, teraY + (Math.floor(i/2)) * gapY, "right");
+            doc.text(isChampions ? "Nature" : "Tera Type", textXX + (i%2) * gapX, teraY + (Math.floor(i/2)) * gapY, "right");
             doc.setFontSize(11);
             doc.setFont("customFont", 'normal');
             doc.text(teraType, textX + (i%2) * gapX, teraY + (Math.floor(i/2)) * gapY);
@@ -642,7 +645,7 @@ function generatePdf(element) {
                 doc.text(gui[currentLang]["lg"], 10, ystart+ygap*8*u, 'left');
                 doc.setFont("customFont","normal")
                 doc.text("Pok\u00e9mon", 24, ystart+ygap*8*u, 'center');
-                doc.text(gui[currentLang]["teratype"], 22, ystart+ygap+ygap*8*u, 'center');
+                doc.text(isChampions ? "Nature" : gui[currentLang]["teratype"], 22, ystart+ygap+ygap*8*u, 'center');
                 doc.text(gui[currentLang]["ability"], 22, ystart+ygap*2+ygap*8*u, 'center');
                 doc.setFontSize(9);
                 doc.text(gui[currentLang]['item'], 22, ystart+ygap*3+ygap*8*u,"center");
@@ -673,8 +676,12 @@ function generatePdf(element) {
                         doc.text(window['pokes' + currentLang][id], 22+c_width*(i+1), ystart+0.4+8*ygap*u,"center");
                     }
                     doc.setFontSize(startFontSize);
-                    id = TypeTranslator[pokes[i].teraType];
-                    doc.text(window['types' + currentLang][id], 22+c_width*(i+1), ystart+ygap+8*ygap*u,"center");
+                    if (isChampions) {
+                        doc.text(pokes[i].teraType || '', 22+c_width*(i+1), ystart+ygap+8*ygap*u,"center");
+                    } else {
+                        id = TypeTranslator[pokes[i].teraType];
+                        doc.text(window['types' + currentLang][id], 22+c_width*(i+1), ystart+ygap+8*ygap*u,"center");
+                    }
                     id = AbilityTranslator[pokes[i].ability];
                     var abilityFontSize=startFontSize;
                     var abilityTextWidth= doc.getStringUnitWidth(window['abilities' + currentLang][id])*abilityFontSize;
